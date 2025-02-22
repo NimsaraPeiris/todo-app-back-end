@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import "dotenv/config";
 import { connectDB } from "./configs/db.config";
 import bodyParser from "body-parser";
+import todoRouter from "./routes/todo.route";
 import { errorHandler } from "./middlewares/error.middleware";
 const cors = require("cors");
 const app: Express = express();
@@ -18,6 +19,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+// Routes
+app.use("/api/todos", todoRouter);
 
 // Error handling
 app.use(errorHandler);
