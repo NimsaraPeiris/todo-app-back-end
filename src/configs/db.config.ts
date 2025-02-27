@@ -1,25 +1,23 @@
 import { Sequelize } from "sequelize";
-import { config } from "dotenv";
-
-config();
+import "dotenv/config";
 
 const sequelize = new Sequelize({
   dialect: "mysql",
-  host: process.env.DB_HOST || "localhost",
-  username: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "todo_app",
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: 3306,
   logging: false,
 });
 
-export const connectDB = async (): Promise<void> => {
+export const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
-    console.log("✅ Connected to MySQL Database");
+    console.log("✅ Database connected successfully");
   } catch (error) {
-    console.error("❌ Error connecting to MySQL:", error);
-    process.exit(1);
+    console.error("❌ Unable to connect to the database:", error);
+    throw error;
   }
 };
 
